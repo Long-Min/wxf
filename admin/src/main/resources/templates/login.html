@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>微分销平台系统</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link href="https://v3.bootcss.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="https://v3.bootcss.com/examples/signin/signin.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <form class="form-signin" th:action="@{/login.do}" method="post">
+        <h2 class="form-signin-heading">微分销后台管理界面</h2>
+        <label for="username" class="sr-only">登录名</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="请输入您的用户名" required="required" autofocus="">
+        <label for="password" class="sr-only">密&nbsp;码</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="请输入您的密码" required="required">
+        <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <div style="color: red;font-size: 15px" th:text="${error}" th:if="${!#strings.isEmpty(error)}"></div>
+    </form>
+</div> <!-- /container -->
+
+<script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<!--[if lt IE 9]>
+<script src="https://v3.bootcss.com/assets/js/ie8-responsive-file-warning.js"></script>
+<![endif]-->
+<script src="https://v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var base = /*[[@{/}]]*/ '';
+    /*]]>*/
+</script>
+
+<!--<script>-->
+<!--    function post(url, jsonData, success, error) {-->
+<!--        $.post(base + url,-->
+<!--            jsonData,-->
+<!--            function (data) {-->
+<!--                if (data.ok) {-->
+<!--                    if (success) success(data);-->
+<!--                } else {-->
+<!--                    if (error) error(data);-->
+<!--                }-->
+<!--            });-->
+<!--    }-->
+
+<!--    $(function () {-->
+<!--        $("#btnLogin").click(function () {-->
+<!--            var username = $("#username").val();-->
+<!--            var password = $("#password").val();-->
+
+<!--            post("login.do", {"username": username, "password": password}, function (data) {-->
+<!--                //alert(data.error);-->
+<!--                window.location.href = base + "index";-->
+<!--            }, function (data) {-->
+<!--                alert(data.error);-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+</body>
+</html>

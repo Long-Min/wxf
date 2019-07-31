@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>微分销管理平台</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/css/zTreeStyle.css}" rel="stylesheet">
+    <link th:href="@{/css/public.css}" rel="stylesheet">
+    <link th:href="@{/css/ymPrompt.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid">
+    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+            <td width="100" id="frmLefts2" valign="top" align="top" style="border-right: solid 1px #D6E3F3;">
+                <!--商品类型-->
+                <ul id="treeDemo" class="ztree">
+                    <li>
+                        <a href="javascript:void(0)" onclick="getGoods(this)" data="">全部</a>
+                    </li>
+                    <li th:each="goodsType : ${goodsTypes}">
+                        <a href="javascript:void(0)" onclick="getGoods(this)" th:data="${goodsType.id}"
+                           th:text="${goodsType.name}"></a>
+                    </li>
+                </ul>
+            </td>
+            <td width="6" id="codeTitle" style="width:6px;" valign="middle" bgcolor="#F4F8EE">
+            </td>
+            <td>
+                <table width="100%" border="0" cellspacing="6" cellpadding="0"
+                       style="border-collapse: separate; border-spacing: 6px;">
+                    <tr valign="top">
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="6" class="blockTable">
+                                <tr>
+                                    <td valign="middle" class="blockTd">
+                                        <img src="http://javen666.com:8080/fxmall/Framework/Icons/icon012a6.gif"/>
+                                        商品信息列表
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 8px 4px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top: 0px; padding-left: 6px; padding-right: 6px; padding-bottom: 8px;">
+                                        <table width="100%" cellpadding="2" cellspacing="1"
+                                               class="dataTable" sortstring="" id="dg1" page="true" size="0"
+                                               multiselect="true" autofill="true" scroll="false" lazy="false"
+                                               cachesize="0">
+                                            <tr ztype="head" class="dataTableHead">
+                                                <td width="5%" align="center">
+                                                    序 号
+                                                </td>
+                                                <td align="center" width="15%">
+                                                    <b>商品名称</b>
+                                                </td>
+                                                <td align="center" width="15%">
+                                                    <b>商品图片</b>
+                                                </td>
+                                                <td align="center" width="10%">
+                                                    <b>状态</b>
+                                                </td>
+                                                <td align="center" width="12%">
+                                                    <b>操作</b>
+                                                </td>
+                                            </tr>
+                                            <tr th:each="g,var : ${goodsList}" height="35" style="background:#ffffff">
+                                                <td align="center" th:text="${var.count}">
+                                                </td>
+                                                <td align="center" th:text="${g.name}">
+                                                </td>
+                                                <td align="center" height="100px">
+                                                    <img th:src="${g.pic}" style="width:150px;height:100px;"/>
+                                                </td>
+                                                <td align="center">
+                                                    <span style="color:blue" th:if="${g.state==0}">待上架</span>
+                                                    <span style="color:green" th:if="${g.state==1}">已上架</span>
+                                                    <span style="color:red" th:if="${g.state==2}">已下架</span>
+                                                </td>
+                                                <td align="center">
+                                                    <a href='javascript:void(0);' class='zPushBtn' onClick="up(this)" th:data="${g.id}">
+                                                        <img th:src="@{/img/up.png}"/><b>上架&nbsp;</b>
+                                                    </a>
+
+                                                    <a href='javascript:void(0);' class='zPushBtn' onClick="down(this)" th:data="${g.id}">
+                                                        <img th:src="@{/img/down.png}"/><b>下架&nbsp;</b>
+                                                    </a>
+
+                                                    <a href='javascript:void(0);' class='zPushBtn' onClick="del(this)" th:data="${g.id}">
+                                                        <img th:src="@{/img/icon003a3.gif}"><b>删除&nbsp;</b>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="10" align="center" id="dg1_PageBar" class="pagebg">
+                                                    <div style='float: right; font-family: Tahoma;' class="flickr">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/ymPrompt.js}"></script>
+<script th:src="@{/js/public.js}"></script>
+<script th:src="@{/js/ServerClock.js}"></script>
+<script th:src="@{/js/table.js}"></script>
+
+<script type="text/javascript">
+    function getGoods(source) {
+        var id = $(source).attr("data");
+        reload(base + url + "?goodsTypeId=" + id);
+    }
+
+    function up(source) {
+        var id = $(source).attr("data");
+        post("goods/up", {"id": id}, function (data) {
+            reload();
+        });
+    }
+
+    function down(source) {
+        var id = $(source).attr("data");
+        post("goods/down", {"id": id}, function (data) {
+            reload();
+        });
+    }
+
+    function del(source) {
+        var id = $(source).attr("data");
+        post("goods/del", {"id": id}, function (data) {
+            reload();
+        });
+    }
+
+</script>
+
+</body>
+</html>

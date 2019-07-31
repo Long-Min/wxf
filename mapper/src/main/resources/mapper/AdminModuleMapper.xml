@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chenlong.mapper.AdminModuleMapper">
+
+    <resultMap id="jqueryTreeView" type="com.chenlong.entity.vo.JqueryTreeView">
+        <result column="parent_id" property="fid"></result>
+        <result column="parent_name" property="text"></result>
+        <result column="parent_url" property="href"></result>
+        <collection property="nodes" ofType="com.chenlong.entity.vo.JqueryTreeView">
+            <result column="id" property="fid"></result>
+            <result column="name" property="text"></result>
+            <result column="url" property="href"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getModuleByAdminId" resultMap="jqueryTreeView">
+        SELECT
+        pm.id parent_id,
+        pm.name parent_name,
+        pm.url parent_url,
+        m.id,
+        m.name,
+        m.url
+        FROM admin a
+        LEFT OUTER JOIN admin_role r ON a.role_id = r.id
+        LEFT OUTER JOIN admin_module_role mr ON r.id = mr.admin_role_id
+        LEFT OUTER JOIN admin_module m ON mr.admin_module_id = m.id
+        LEFT OUTER JOIN admin_module pm ON m.parent_id = pm.id
+        WHERE a.id = #{adminId}
+        AND m.parent_id != 0
+        ORDER BY m.order_num asc
+    </select>
+</mapper>
