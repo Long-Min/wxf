@@ -1,10 +1,13 @@
 package com.chenlong.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.chenlong.common.http.Result;
 import com.chenlong.entity.dto.Goods;
+import com.chenlong.entity.dto.GoodsSku;
 import com.chenlong.entity.dto.GoodsType;
 import com.chenlong.service.Impl.GoodsService;
+import com.chenlong.service.Impl.GoodsSkuService;
 import com.chenlong.service.Impl.GoodsTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,8 @@ public class GoodsController {
 
     @Autowired
     GoodsService goodsService;
+
+
 
     @RequestMapping("list")
     public ModelAndView goodsList(@RequestParam(value = "goodsTypeId",required = false,defaultValue = "0") String goodsTypeId){
