@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -71,11 +72,18 @@ public class GoodsController {
     }
 
     @RequestMapping("upload")
-    public Result<?> upload(){
+    public Result<?> upload(MultipartFile file){
+        if(file != null){
+            String fileName = file.getOriginalFilename();
+            int i = fileName.lastIndexOf(".");
+            String s = fileName.substring(i, fileName.length());
+            System.out.println(s);
 
 
+            return Result.success();
+        }
 
-        return Result.success();
+        return Result.error();
     }
 
     @RequestMapping("save")

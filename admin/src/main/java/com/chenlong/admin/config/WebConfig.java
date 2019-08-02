@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletWebArgumentR
 import java.util.List;
 
 //配置SpringMVC,发现参数,调用ArgumentResolverResolver,并注入的,配置类
+//配置springBoot的拦截器
 @Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
 
