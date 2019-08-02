@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 81
   servlet:
     session:
       timeout: 600
@@ -11,9 +11,8 @@ server:
     mime-types: text/plain,text/xml,text/html,application/json,application/xml
 
 spring:
-
   application:
-    name: dome03_admin
+    name: dome03_merchant
   http:
     encoding:
       force: true

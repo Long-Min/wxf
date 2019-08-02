@@ -1,14 +1,13 @@
 package com.chenlong.entity.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+
 import com.chenlong.entity.base.BaseDto;
 
-@TableName("goods_type")
 public class GoodsType extends BaseDto {
+
 
   private String name;
   private Long orderNum;
-
 
 
   public String getName() {

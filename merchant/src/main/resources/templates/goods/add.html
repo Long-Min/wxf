@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>微分销商户管理</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <style type="text/css">
+        .sku {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="page-content" style="margin-top:-10px">
+        <div class="page-header">
+            <h2>
+                温馨提示：
+                <small>
+                    商品添加/修改成功后，需要管理员审核通过后才能发布到会员推广商品列表
+                </small>
+            </h2>
+        </div>
+        <input type="hidden" id="id" th:value="${goods?.id}">
+        <div class="widget-main">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <td align="right">
+                        <span class="red">*</span><strong>商品名称：</strong>
+                    </td>
+                    <td>
+                        <input type="text" id="goods_name" name="good_name" th:value="${goods?.name}">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <span class="red">*</span><strong>排序号：</strong>
+                    </td>
+                    <td>
+                        <input type="number" id="orderNum" name="orderNum" th:value="${goods?.orderNum}">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><span class="red">*</span><strong>商品类型：</strong></td>
+                    <td>
+                        <select name="type_id" id="type_id" style="width:252px;font-size:14px" class="selectBox">
+                            <option value="">请选择...</option>
+                            <option th:each="goodsType:${goodsTypeList}"
+                                    th:value="${goodsType.id}"
+                                    th:text="${goodsType.name}"
+                                    th:selected="${goods} != null and ${goods.goodsTypeId}==${goodsType.id}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>图片预览：</strong></td>
+                    <td>
+                        <div id="sm_div">
+                            <img id="img" th:src="${goods?.pic}"
+                                 style="width:240px;height:150px;border:1px solid #ddd;">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><span class="red">*</span><strong>上传图片：</strong></td>
+                    <td>
+                        <input type="file" name="file" id="file" style="width:540px;height:22px;cursor:hand"
+                               class="fileinput" onchange="upload()">
+                        <input type="hidden" id="filePath" th:value="${goods?.pic}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><span class="red">*</span><strong>推广说明：</strong></td>
+                    <td>
+                        <textarea id="promote_desc" th:text="${goods?.promoteDesc}" name="promote_desc"
+                                  style="width:540px; height: 160px;"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><span class="red">*</span><strong>商品套餐：</strong></td>
+                    <td>
+                        <table id="tcbg" class="table table-bordered table-striped">
+                            <tbody>
+                            <tr>
+                                <th align="left" style="background-color:#F9F9F9">(<span style="color:red">*</span>)描述
+                                </th>
+                                <th align="left" style="background-color:#F9F9F9">(<span style="color:red">*</span>)成本
+                                </th>
+                                <th align="left" style="background-color:#F9F9F9">(<span style="color:red">*</span>)价格
+                                </th>
+                                <th align="left" style="background-color:#F9F9F9">(<span style="color:red">*</span>)分成
+                                </th>
+                            </tr>
+                            <tr class="trSku" th:each="goodsSku: ${goodsSkulist}">
+                                <td><input class="sku" data="title" th:value="${goodsSku.title}"/></td>
+                                <td><input class="sku" data="cost" th:value="${goodsSku.cost}"/></td>
+                                <td><input class="sku" data="price" th:value="${goodsSku.price}"/></td>
+                                <td><input class="sku" data="pmoney" th:value="${goodsSku.pmoney}"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top:10px">
+                            <button class="btn btn-sm btn-primary" onclick="insertRows()">
+                                <i class="icon-save"></i>
+                                增加
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="delRows()">
+                                <i class="icon-save"></i>
+                                删除
+                            </button>
+                            (<span style="color:red">提示信息：</span>上述所有输入项均为必填项目，请务必填入相应值后保存！)
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <span onclick="save();" class="btn btn-lxg btn-primary">
+                            <i class="icon-save bigger-120"></i>保存
+                        </span>
+                        <span onclick="backToGoodsList()" class="btn btn-lxg btn-undo">
+                            <i class="icon-undo bigger-120"></i>返回
+                        </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+
+<script type="text/javascript">
+    function backToGoodsList() {
+        reload(base + "goods/list");
+    }
+
+    function insertRows() {
+        var row = "<tr class=\"trSku\">" +
+            "<td><input class=\"sku\" data='title'/></td>" +
+            "<td><input class=\"sku\" data='cost'/></td>" +
+            "<td><input class=\"sku\" data='price'/></td>" +
+            "<td><input class=\"sku\" data='pmoney'/></td>" +
+            "</tr>";
+        $("#tcbg > tbody").append(row);
+    }
+
+    function delRows() {
+        var trs = $("#tcbg > tbody > .trSku");
+        trs.eq(trs.length - 1).remove();
+    }
+
+    function upload() {
+        var file = document.getElementById('file').files[0];
+        var fd = new FormData();
+        fd.append('file', file);
+        $.ajax({
+            url: base + 'goods/upload',
+            dataType: 'json',
+            type: 'POST',
+            async: true,
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.ok) {
+                    $("#filePath").val(result.data);
+                    $("#img").attr("src", result.data);
+                }
+            }
+        });
+    }
+
+    function save() {
+        var id = $("#id").val();
+        var form = {
+            "name": null,
+            "goodsTypeId": null,
+            "pic": null,
+            "promoteDesc": null,
+            "skuTitle": null,
+            "skuCost": null,
+            "skuPrice": null,
+            "skuPmoney": null,
+            "orderNum": null
+        };
+        if (id.toString().length > 0) {
+            form.id = id;
+        } else {
+            form.id = undefined;
+        }
+        form.name = $("#goods_name").val();
+        form.goodsTypeId = $("#type_id").val();
+        form.pic = $("#filePath").val();
+        form.promoteDesc = $("#promote_desc").val();
+        form.orderNum = $("#orderNum").val();
+        form.skuTitle = []; // 描述
+        form.skuCost = []; //成本
+        form.skuPrice = []; //商品单价
+        form.skuPmoney = []; //分成
+
+        var trTitles = $("input[data=title]");
+        var trCosts = $("input[data=cost]");
+        var trPrices = $("input[data=price]");
+        var trPmoneys = $("input[data=pmoney]");
+
+        $.each(trTitles, function (i, input) {
+            form.skuTitle.push($(input).val());
+        });
+        $.each(trCosts, function (i, input) {
+            form.skuCost.push($(input).val());
+        });
+        $.each(trPrices, function (i, input) {
+            form.skuPrice.push($(input).val());
+        });
+        $.each(trPmoneys, function (i, input) {
+            form.skuPmoney.push($(input).val());
+        });
+        form.skuTitle = form.skuTitle.join("|"); // 描述
+        form.skuCost = form.skuCost.join("|"); //成本
+        form.skuPrice = form.skuPrice.join("|"); //商品单价
+        form.skuPmoney = form.skuPmoney.join("|"); //分成
+
+        post("goods/save", form, function (result) {
+            backToGoodsList();
+        });
+    }
+</script>
+
+</body>
+</html>

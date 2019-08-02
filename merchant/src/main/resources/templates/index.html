@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>微分销平台</title>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/default.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<!--导航条-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-2" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">微分销商户系统</a>
+        </div>
+    </div>
+</nav>
+<!--导航条结束-->
+<div class="container-fluid">
+    <!--左边-->
+    <div id="left" class="col-md-2">
+        <div id="treeview1" class=""></div>
+    </div>
+    <!--右边-->
+    <div id="right" class="col-md-10"></div>
+</div>
+
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+<script th:src="@{/js/bootstrap-treeview.js}"></script>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var base = /*[[@{/}]]*/ ''; //获取context-path
+    /*]]>*/
+    var url="";
+</script>
+
+<script type="text/javascript">
+
+    function reload(address) {
+        if(address == null){
+            address =url;
+        }
+        $("#right").load(address);
+        $(".modal-backdrop").remove();
+
+    }
+
+    function post(url, jsonData, success, error) {
+        $.post(url,
+            jsonData,
+            function (data) {
+                if (data.ok) { //business logic is success
+                    if (success) success(data); //callback
+                } else { // business logic is error
+                    if (error) error(data); else alert(data.error);
+                }
+            });
+    }
+
+    $(function () {
+        post("func-list", null, function (result) {
+            //http://www.jq22.com/plugin/10461
+            $('#treeview1').treeview({
+                data: result.data,
+                levels: 0 //expanded to 0 levels
+            });
+            $("#treeview1").on("nodeSelected", function (event, data) {
+                var u = data.href.toString();
+                if (u.length > 0) {
+                    url=u;
+                    $("#right").load(u);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

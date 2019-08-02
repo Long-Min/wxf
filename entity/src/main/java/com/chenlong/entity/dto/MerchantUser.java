@@ -1,22 +1,30 @@
 package com.chenlong.entity.dto;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.chenlong.entity.base.BaseDto;
+
+import java.util.Date;
 
 @TableName("merchant_user")
 public class MerchantUser extends BaseDto {
 
-  @TableField("name")
   private String name;
   private String userName;
   private String password;
   private String qq;
   private String wxh;
   private String phone;
-  private java.sql.Timestamp createTime;
+  private Date createTime;
 
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
 
   public String getName() {
@@ -73,11 +81,11 @@ public class MerchantUser extends BaseDto {
   }
 
 
-  public java.sql.Timestamp getCreateTime() {
+  public Date getCreateTime() {
     return createTime;
   }
 
-  public void setCreateTime(java.sql.Timestamp createTime) {
+  public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 

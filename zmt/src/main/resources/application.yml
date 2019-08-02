@@ -13,7 +13,7 @@ server:
 spring:
 
   application:
-    name: dome03_admin
+    name: dome03
   http:
     encoding:
       force: true
