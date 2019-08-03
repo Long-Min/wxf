@@ -43,7 +43,7 @@ public class LoginController {
             }
         }catch (AuthenticationException e){
         }
-        return new ModelAndView("redirect:/login");
+        return new ModelAndView("/login");
     }
 
 }

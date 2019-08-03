@@ -1,6 +1,8 @@
 package com.chenlong.entity.dto;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 
+@TableName("admin_module_role")
 public class AdminModuleRole {
 
   private Long id;

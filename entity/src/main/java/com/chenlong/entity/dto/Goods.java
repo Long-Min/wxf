@@ -3,6 +3,8 @@ package com.chenlong.entity.dto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.chenlong.entity.base.BaseDto;
 
+import java.util.Date;
+
 @TableName("goods")
 public class Goods extends BaseDto {
 
@@ -17,7 +19,7 @@ public class Goods extends BaseDto {
     private String skuPmoney;
     private Long orderNum;
     private Long state;
-    private java.sql.Timestamp createTime;
+    private Date createTime;
 
 
     public String getName() {
@@ -119,12 +121,30 @@ public class Goods extends BaseDto {
     }
 
 
-    public java.sql.Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(java.sql.Timestamp createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "name='" + name + '\'' +
+                ", merchantUserId=" + merchantUserId +
+                ", goodsTypeId=" + goodsTypeId +
+                ", pic='" + pic + '\'' +
+                ", promoteDesc='" + promoteDesc + '\'' +
+                ", skuTitle='" + skuTitle + '\'' +
+                ", skuCost='" + skuCost + '\'' +
+                ", skuPrice='" + skuPrice + '\'' +
+                ", skuPmoney='" + skuPmoney + '\'' +
+                ", orderNum=" + orderNum +
+                ", state=" + state +
+                ", createTime=" + createTime +
+                '}';
     }
 
     public enum State{
