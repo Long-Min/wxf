@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -69,41 +70,48 @@ public class GoodsService extends ServiceImpl<GoodsMapper, Goods> {
 
     @Transactional
     public void saveGoods(Goods goods) {
+        this.saveOrUpdate(goods);
+        Long id = goods.getId();
         if(goods.getId() != null){
-            String s = goods.getId().toString();
-            this.delGoods(s);//删除商品
             UpdateWrapper<GoodsSku> goodsSkuUpdateWrapper = new UpdateWrapper<>();
-            goodsSkuUpdateWrapper.lambda().eq(GoodsSku::getGoodId,s);
+            goodsSkuUpdateWrapper.lambda().eq(GoodsSku::getGoodId,id);
             goodsSkuService.remove(goodsSkuUpdateWrapper);//删除商品类型
         }
         /*
-        保存
-        先
-          删除商品
-          删除商品类型
-        再
-          保存商品
+             保存
+          保存或更新商品
           得到商品id
           拆分字符串
           保存商品类型
          */
+        String[] title = goods.getSkuTitle().split("\\|");
+        String[] cost = goods.getSkuCost().split("\\|");
+        String[] price = goods.getSkuPrice().split("\\|");
+        String[] pmoney = goods.getSkuPmoney().split("\\|");
 
+        ArrayList<GoodsSku> goodsSkuArrayList = new ArrayList<GoodsSku>(title.length);
+
+        Long count = 1L;
+        for (int i = 0; i < title.length;i++ ){
+            if(!"|".equals(title[i])){
+                GoodsSku goodsSku = new GoodsSku();
+                goodsSku.setTitle(title[i]);
+                goodsSku.setCost(cost[i]);
+                goodsSku.setPrice(price[i]);
+                goodsSku.setPmoney(pmoney[i]);
+                goodsSku.setGoodId(id);
+                goodsSku.setOrderNo(count);
+                goodsSkuArrayList.add(goodsSku);
+            }
+        }
         /*
-        增加
-        先
-          保存商品
+             增加
+          保存或更新商品
           得到商品id
+            删除商品类型
           拆分字符串
           保存商品类型
          */
-
-        GoodsSku goodsSku = new GoodsSku();
-        BeanUtils.copyProperties(goods,goodsSku);
-        //goodsSku.get
-
-
-
-        //this.save(goods);
-        //goodsSkuService.save(null);
+        goodsSkuService.saveBatch(goodsSkuArrayList);
     }
 }

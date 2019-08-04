@@ -129,23 +129,6 @@ public class Goods extends BaseDto {
         this.createTime = createTime;
     }
 
-    @Override
-    public String toString() {
-        return "Goods{" +
-                "name='" + name + '\'' +
-                ", merchantUserId=" + merchantUserId +
-                ", goodsTypeId=" + goodsTypeId +
-                ", pic='" + pic + '\'' +
-                ", promoteDesc='" + promoteDesc + '\'' +
-                ", skuTitle='" + skuTitle + '\'' +
-                ", skuCost='" + skuCost + '\'' +
-                ", skuPrice='" + skuPrice + '\'' +
-                ", skuPmoney='" + skuPmoney + '\'' +
-                ", orderNum=" + orderNum +
-                ", state=" + state +
-                ", createTime=" + createTime +
-                '}';
-    }
 
     public enum State{
         PENDING(0L,"待审核"),

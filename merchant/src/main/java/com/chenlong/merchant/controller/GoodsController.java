@@ -50,6 +50,7 @@ public class GoodsController {
     }
 
     @RequestMapping("del")
+    @ResponseBody
     public Result<?> delGoods(String id){
         goodsService.delGoods(id);
         return Result.success();
@@ -100,8 +101,8 @@ public class GoodsController {
     @ResponseBody
     public Result<?> saveGoods(Goods goods,MerchantUser merchantUser){
         goods.setMerchantUserId(merchantUser.getId());
+        goods.setState(Goods.State.PENDING.getCode());
         goodsService.saveGoods(goods);
-        System.out.println(goods);
         return Result.success();
     }
 
