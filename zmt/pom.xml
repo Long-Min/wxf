@@ -24,6 +24,10 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.chenlong</groupId>
+            <artifactId>service</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

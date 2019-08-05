@@ -114,4 +114,14 @@ public class GoodsService extends ServiceImpl<GoodsMapper, Goods> {
          */
         goodsSkuService.saveBatch(goodsSkuArrayList);
     }
+
+
+    @Transactional(readOnly = true)
+    public List<Goods> getUpGoodsById(Long id) {
+        QueryWrapper<Goods> goodsQueryWrapper = new QueryWrapper<>();
+        goodsQueryWrapper.lambda()
+                .eq(Goods::getMerchantUserId,id)
+                .eq(Goods::getState,Goods.State.UP.getCode());
+        return this.list(goodsQueryWrapper);
+    }
 }
