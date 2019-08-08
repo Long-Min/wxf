@@ -27,6 +27,7 @@
         <dependency>
             <groupId>com.chenlong</groupId>
             <artifactId>service</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 

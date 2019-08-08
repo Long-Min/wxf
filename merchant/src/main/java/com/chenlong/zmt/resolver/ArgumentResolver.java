@@ -1,7 +1,6 @@
-package com.chenlong.merchant.resolver;
+package com.chenlong.zmt.resolver;
 
 import com.chenlong.common.constant.Constants;
-import com.chenlong.entity.dto.Admin;
 import com.chenlong.entity.dto.MerchantUser;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebArgumentResolver;

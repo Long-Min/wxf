@@ -56,10 +56,7 @@ spring:
       max-pool-prepared-statement-per-connection-size: 50
       max-open-prepared-statements: 50
       connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci
-#  redis:
-#    host: localhost
-#    port: 6379
-#    password :
+
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.chenlong.entity.dto

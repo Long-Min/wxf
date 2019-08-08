@@ -1,4 +1,4 @@
-package com.chenlong.merchant.advice;
+package com.chenlong.zmt.advice;
 
 import com.chenlong.common.http.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -1,4 +1,4 @@
-package com.chenlong.merchant.controller;
+package com.chenlong.zmt.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chenlong.common.http.Result;

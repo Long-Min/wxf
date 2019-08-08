@@ -1,6 +1,6 @@
-package com.chenlong.merchant.config;
+package com.chenlong.zmt.config;
 
-import com.chenlong.merchant.shiro.MerchantCustomRealm;
+import com.chenlong.zmt.shiro.MerchantCustomRealm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;

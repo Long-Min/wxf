@@ -1,7 +1,7 @@
-package com.chenlong.merchant.config;
+package com.chenlong.zmt.config;
 
-import com.chenlong.merchant.interceptor.LoginInterceptor;
-import com.chenlong.merchant.resolver.ArgumentResolver;
+import com.chenlong.zmt.interceptor.LoginInterceptor;
+import com.chenlong.zmt.resolver.ArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

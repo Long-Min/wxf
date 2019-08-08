@@ -1,4 +1,4 @@
-package com.chenlong.merchant.shiro;
+package com.chenlong.zmt.shiro;
 
 import com.chenlong.common.http.ResultCode;
 import com.chenlong.entity.dto.MerchantUser;

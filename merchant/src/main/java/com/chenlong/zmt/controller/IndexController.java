@@ -1,4 +1,4 @@
-package com.chenlong.merchant.controller;
+package com.chenlong.zmt.controller;
 
 import com.chenlong.common.http.Result;
 import com.chenlong.entity.vo.JqueryTreeView;

@@ -1,6 +1,5 @@
-package com.chenlong.merchant.interceptor;
+package com.chenlong.zmt.interceptor;
 
-import com.chenlong.entity.dto.Admin;
 import com.chenlong.entity.dto.MerchantUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
